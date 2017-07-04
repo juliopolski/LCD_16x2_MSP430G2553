@@ -1,7 +1,7 @@
 #include <msp430g2553.h>
 
 /*
- *  RS - Diz se vc estÃ¡ enviando COMANDO ou CARACTER
+ *  RS - Diz se vc esta enviando COMANDO ou CARACTER
  *  E -  Gatilho de borda de descida para escrita ou de subida para leitura.
  */
 
@@ -100,11 +100,12 @@ void integerToLcd(int integer)
 	d = (integer%100)/10;
 	u = integer%10;
 
-	if (m + 48 != 48)
+	if (m != 0)
 	    enviaInt(m);
-	if(m + 48 == 48 && c + 48 != 48)
+	//se milesimo for 0 e centesimo for diferente de 0, ou, m for diferente de 0 e centesimo for igual a 0 MOSTRA(ex: 1034[mostra o zero], 0013[nao mostra], 0123[mostra o 1])
+	if((c != 0) || (m != 0 && c == 0))
 	    enviaInt(c);
-	if((m + 48 == 48 && c + 48 == 48) && d + 48 != 48)
+	if((d != 0) || ((m != 0 || c != 0) && d == 0))
 	    enviaInt(d);
 	
     enviaInt(u);
